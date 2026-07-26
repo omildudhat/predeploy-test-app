@@ -13,12 +13,12 @@ spec:
         app: payments
     spec:
       containers:
-        - name: payments
-          image: nginx:1.27
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
-            limits:
-              memory: "256Mi"
-              cpu: "1000m"
+      - name: payments
+        image: nginx:1.27
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 1000m
