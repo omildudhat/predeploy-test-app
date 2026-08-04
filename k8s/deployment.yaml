@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payments-service
-  namespace: default
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: payments
@@ -18,10 +17,10 @@ spec:
         image: nginx:1.27
         resources:
           requests:
-            memory: 128Mi
+            memory: 1Gi
             cpu: 250m
           limits:
-            memory: 256Mi
+            memory: 1Gi
             cpu: 1000m
         readinessProbe:
           httpGet:

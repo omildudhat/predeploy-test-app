@@ -1,8 +1,26 @@
-resource "aws_security_group" "database" {
-  name = "database-sg"
+terraform {
+  required_version = ">= 1.5.0"
+}
+
+# Preserve the existing resource address so PreDeploy does not treat it as removed.
+resource "aws_security_group" "payments" {
+  name        = "payments-service"
+  description = "Security group for payments service"
 
   ingress {
-    description = "Private PostgreSQL access"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+}
+
+# Safe baseline for the later public-ingress test.
+resource "aws_security_group" "database" {
+  name        = "database-sg"
+  description = "Private database access"
+
+  ingress {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
@@ -10,6 +28,7 @@ resource "aws_security_group" "database" {
   }
 }
 
+# Safe baseline for later public-access and deletion-protection tests.
 resource "aws_db_instance" "payments" {
   identifier          = "payments-db"
   engine              = "postgres"
@@ -18,6 +37,7 @@ resource "aws_db_instance" "payments" {
   deletion_protection = true
 }
 
+# Safe baseline for the later resource-removal test.
 resource "aws_nat_gateway" "primary" {
   allocation_id = "eipalloc-test"
   subnet_id     = "subnet-test"
