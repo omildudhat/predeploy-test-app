@@ -4,7 +4,7 @@ metadata:
   name: payments-service
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: payments
@@ -14,20 +14,20 @@ spec:
         app: payments
     spec:
       containers:
-        - name: payments
-          image: nginx:1.27
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "250m"
-            limits:
-              memory: "1Gi"
-              cpu: "1000m"
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8080
+      - name: payments
+        image: nginx:1.27
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 1Gi
+            cpu: 250m
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
