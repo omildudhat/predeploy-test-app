@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: payments-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: payments
@@ -20,13 +20,4 @@ spec:
             memory: 1Gi
             cpu: 250m
           limits:
-            memory: 1Gi
-            cpu: 1000m
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 8080
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
+            cpu: 250m
