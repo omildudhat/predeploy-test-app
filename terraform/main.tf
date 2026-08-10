@@ -38,3 +38,5 @@ resource "aws_db_instance" "payments" {
 }
 
 # Safe baseline for the later resource-removal test.
+
+# Phase 6A live webhook acceptance
