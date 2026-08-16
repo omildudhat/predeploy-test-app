@@ -13,12 +13,20 @@ spec:
         app: payments
     spec:
       containers:
-        - name: payments
-          image: nginx:1.27
-          resources:
-            requests:
-              memory: "1Gi"
-              cpu: "250m"
-            limits:
-              memory: "1Gi"
-              cpu: "1000m"
+      - name: payments
+        image: nginx:1.27
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 250m
+          limits:
+            memory: 1Gi
+            cpu: 1000m
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
